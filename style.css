@@ -1,0 +1,34 @@
+#app-grid {
+    layout: grid;
+    grid-size: 2;
+    grid-columns: 1fr;
+    grid-rows: 1fr 3;
+}
+#test-cases {
+    height: 100%;
+    border: dodgerblue;
+}
+#statement {
+    height: 100%;
+    border: dodgerblue;
+}
+#bottombar {
+    min-height: 4;
+    column-span: 2;
+}
+#cmd-input {
+    width: 1fr;
+}
+#codefile-input {
+    width: 1fr;
+}
+.test-text {
+    width: 1fr;
+    border: dodgerblue;
+}
+.statement-title {
+    color: dodgerblue;
+}
+#submission-list {
+    width: 20;
+}
