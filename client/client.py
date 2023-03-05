@@ -33,7 +33,7 @@ R = TypeVar("R")
 
 def logged(func: Callable[P, R]) -> Callable[P, R]:
     @wraps(func)
-    def fn(*args, **kwargs) -> R:
+    def fn(*args: P.args, **kwargs: P.kwargs) -> R:
         try:
             return func(*args, **kwargs)
         except Exception:
@@ -206,7 +206,7 @@ class TuiClashApp(App):
         self.codefile = Input("sol.py", id="codefile-input")
         self.sub_title = "Not connected"
 
-    def run(self, **kwargs):
+    def run(self, **kwargs) -> None:
         handler = threading.Thread(target=self.handle_connection, daemon=True)
         handler.start()
         super().run(**kwargs)
@@ -296,11 +296,13 @@ class TuiClashApp(App):
     def action_start_round(self) -> None:
         self.client.send("START ROUND")
 
-def main():
+
+def main() -> None:
     # TODO: command line interface
     logging.basicConfig(filename="debug.log", level=logging.DEBUG)
     logging.debug("TuiClashApp is starting...")
     TuiClashApp("127.0.0.1", 1234).run()
+
 
 if __name__ == "__main__":
     main()
