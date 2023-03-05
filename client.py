@@ -25,7 +25,7 @@ from textual.widgets import (
     Footer,
 )
 
-from SockClient import SockClient
+from .SockClient import SockClient
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -296,9 +296,11 @@ class TuiClashApp(App):
     def action_start_round(self) -> None:
         self.client.send("START ROUND")
 
-
-if __name__ == "__main__":
+def main():
     # TODO: command line interface
     logging.basicConfig(filename="debug.log", level=logging.DEBUG)
     logging.debug("TuiClashApp is starting...")
     TuiClashApp("127.0.0.1", 1234).run()
+
+if __name__ == "__main__":
+    main()
