@@ -1,13 +1,11 @@
-from setuptools import Extension, setup
+from setuptools import setup
 
 setup(
     name = "tui-clash",
     version = "0.0.1",
     url = "https://github.com/Andriamanitra/tui-clash",
-    
     classifiers = [
         "Environment :: Console",
-        "Intended Audience :: Developers",
         "Operating System :: Microsoft :: Windows :: Windows 10",
         "Operating System :: Microsoft :: Windows :: Windows 11",
         "Operating System :: MacOS",
@@ -23,11 +21,10 @@ setup(
     requires = ["textual"],
 
     packages = ["tui_clash"],
-    package_dir = {'tui_clash': '.'},
+    package_dir = {'tui_clash': 'client'},
     package_data = {'tui_clash': ['style.css']},
 
     entry_points = {
-        # add server too ?
         'console_scripts': [
             'tui-clash = tui_clash.client:main',                  
         ],
