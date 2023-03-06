@@ -1,28 +1,28 @@
 from __future__ import annotations
 
 import json
-import threading
 import logging
-from functools import wraps
-from subprocess import Popen, PIPE, TimeoutExpired
-from collections.abc import Callable
-from typing import ParamSpec, TypeVar
 import shlex
+import threading
+from collections.abc import Callable
+from functools import wraps
+from subprocess import PIPE, Popen, TimeoutExpired
+from typing import ParamSpec, TypeVar
 
 from textual.app import App, ComposeResult
+from textual.containers import Container, Horizontal, Vertical
 from textual.message import Message
-from textual.containers import Vertical, Horizontal, Container
 from textual.screen import Screen
 from textual.widget import Widget
 from textual.widgets import (
-    Header,
-    Label,
-    Static,
     Button,
-    Input,
-    ListView,
-    ListItem,
     Footer,
+    Header,
+    Input,
+    Label,
+    ListItem,
+    ListView,
+    Static,
 )
 
 from .SockClient import SockClient
@@ -89,13 +89,10 @@ class RoundEndScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        if self.submissions:
-            first_submission = self.submissions[0].code
-        else:
-            first_submission = "no submissions"
+        code = self.submissions[0].code if self.submissions else "no submissions"
         yield Horizontal(
             ListView(*self.submissions, id="submission-list"),
-            Static(first_submission, id="code", expand=True),
+            Static(code, id="code", expand=True),
         )
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
@@ -273,7 +270,7 @@ class TuiClashApp(App):
                 "author": "test",
                 "code": code,
                 "command": cmd,
-                "time": None
+                "time": None,
             }
             self.client.send(f"SUBMISSION:{json.dumps(obj)}")
 
