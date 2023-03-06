@@ -14,7 +14,7 @@ setup(
         "Programming Language :: Python :: 3.11",
     ],
     python_requires=">=3.10",
-    requires=["textual"],
+    install_requires=["textual"],
     packages=["tui_clash"],
     package_dir={"tui_clash": "client"},
     package_data={"tui_clash": ["style.css"]},
