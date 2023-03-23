@@ -194,8 +194,9 @@ class TuiClashApp(App):
         ("s", "start_round", "Start a new round"),
     ]
 
-    def __init__(self, host: str, port: int):
+    def __init__(self, host: str, port: int, username: str = "anonymous"):
         super().__init__()
+        self.username = username
         self.client = SockClient(host, port)
         self.testcases = ListView(id="test-cases-list")
         self.puzzle = PuzzleWidget()
@@ -267,7 +268,7 @@ class TuiClashApp(App):
             # TODO: create a Submission class with fancy things
             # TODO: get author name from somewhere (CLI parameter?)
             obj = {
-                "author": "test",
+                "author": self.username,
                 "code": code,
                 "command": cmd,
                 "time": None,

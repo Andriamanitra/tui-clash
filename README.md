@@ -26,7 +26,7 @@ Have fun!
 ## TODO / known bugs / what's missing / planned
 
 * There is currently no command-line interface for the server
-* The command-line interface for the client is lacking some nice things like ability to configure username etc.
+* The command-line interface for the client is lacking some nice things
 * The user interface does not immediately refresh when a round ends unless you interact with it (moving the mouse should be enough)
 
 
