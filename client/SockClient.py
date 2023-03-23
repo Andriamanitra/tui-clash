@@ -24,8 +24,12 @@ class SockClient:
 
     def recv(self) -> str:
         header, _ancdata, _flags, _addr = self.sock.recvmsg(4)
-        msg_size, = struct.unpack("<I", header)
-        msg, _ancdata, _flags, _addr = self.sock.recvmsg(msg_size)
+        remaining_size, = struct.unpack("<I", header)
+        msg = b""
+        while remaining_size > 0:
+            recvd, _ancdata, _flags, _addr = self.sock.recvmsg(remaining_size)
+            remaining_size -= len(recvd)
+            msg += recvd
         return msg.decode()
 
 
