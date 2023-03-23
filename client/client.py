@@ -221,7 +221,7 @@ class TuiClashApp(App):
             except Exception:
                 self.sub_title = "Disconnected"
                 raise
-            # logging.debug(msg)
+            logging.debug(msg)
             if msg.startswith("PUZZLE:{"):
                 new_puzzle = msg.removeprefix("PUZZLE:")
                 self.post_message_no_wait(self.PuzzleChanged(self, new_puzzle))
@@ -260,7 +260,7 @@ class TuiClashApp(App):
 
         num_correct = sum(1 for r in results if r.success)
         self.push_screen(TestResultsScreen(results))
-        logging.debug("%d/%d tests correct", num_correct, len(results))
+        logging.info("%d/%d tests correct", num_correct, len(results))
         if num_correct == len(results):
             with open(self.codefile.value, encoding="utf-8") as file:
                 code = file.read()
@@ -292,14 +292,3 @@ class TuiClashApp(App):
 
     def action_start_round(self) -> None:
         self.client.send("START ROUND")
-
-
-def main() -> None:
-    # TODO: command line interface
-    logging.basicConfig(filename="debug.log", level=logging.DEBUG)
-    logging.debug("TuiClashApp is starting...")
-    TuiClashApp("127.0.0.1", 1234).run()
-
-
-if __name__ == "__main__":
-    main()

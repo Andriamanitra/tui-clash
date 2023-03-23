@@ -20,7 +20,7 @@ setup(
     package_data={"tui_clash": ["style.css"]},
     entry_points={
         "console_scripts": [
-            "tui-clash = tui_clash.client:main",
+            "tui-clash = tui_clash.cli:main",
         ],
     },
 )
