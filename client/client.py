@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import json
 import logging
 import shlex
@@ -31,6 +32,8 @@ P = ParamSpec("P")
 R = TypeVar("R")
 
 
+# TODO: make text selectable
+
 def logged(func: Callable[P, R]) -> Callable[P, R]:
     @wraps(func)
     def fn(*args: P.args, **kwargs: P.kwargs) -> R:
@@ -61,6 +64,7 @@ class TestResultsScreen(Screen):
         self.results = results
 
     def compose(self) -> ComposeResult:
+        # TODO: button to close (or instructions to press esc)
         yield Header()
         for result in self.results:
             yield Static(result.show())
@@ -77,6 +81,15 @@ class ClashStatic(Static):
         self.update(txt)
 
 
+class Title(Label):
+    DEFAULT_CSS = """
+    Title {
+        width: 100%;
+        text-align: center;
+    }
+    """
+
+
 class RoundEndScreen(Screen):
     # TODO: maybe it's not good to make it so easy to accidentally quit
     # maybe could make a thing to toggle the results from previous round
@@ -89,17 +102,40 @@ class RoundEndScreen(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        code = self.submissions[0].code if self.submissions else "no submissions"
+        yield Title("Round results")
+
+        if not self.submissions:
+            yield Static("No one successfully submitted anything")
+            return
+
+        first_subm = self.submissions[0]
+        charlen = len(first_subm.code)
+        bytelen = len(first_subm.code.encode("utf-8"))
         yield Horizontal(
-            ListView(*self.submissions, id="submission-list"),
-            Static(code, id="code", expand=True, markup=False),
+            Vertical(
+                Title("Submissions"),
+                ListView(*self.submissions),
+                id="submission-list"
+            ),
+            Vertical(
+                Static(f"Command: {first_subm.cmd}", id="cmd", markup=False),
+                Static(f"Length: chars={charlen}, bytes={bytelen}", id="len", markup=False),
+                Static(first_subm.code, id="code", expand=True, markup=False),
+                id="submission-details",
+            )
         )
 
+    def show_submission(self, subm: Submission):
+        # TODO: figure out how to not duplicate logic from self.compose()
+        charlen = len(subm.code)
+        bytelen = len(subm.code.encode("utf-8"))
+        self.query_one("#cmd", Static).update(f"Command: {subm.cmd}")
+        self.query_one("#len", Static).update(f"Length: chars={charlen}, bytes={bytelen}")
+        self.query_one("#code", Static).update(subm.code)
+
     def on_list_view_selected(self, event: ListView.Selected) -> None:
-        if not isinstance(event.item, Submission):
-            return
-        code_view = self.query_one("#code", Static)
-        code_view.update(event.item.code)
+        if isinstance(event.item, Submission):
+            self.show_submission(event.item)
 
 
 class Submission(ListItem):
@@ -110,8 +146,8 @@ class Submission(ListItem):
         self.cmd = submission_obj["command"]
 
     def compose(self) -> ComposeResult:
-        # TODO: figure out a good way to show cmd too
-        yield Label(self.author)
+        lang = self.cmd.split()[0]
+        yield Label(f"{self.author} ({lang})")
 
 
 class RunResult:
@@ -190,9 +226,13 @@ class TuiClashApp(App):
     BINDINGS = [
         ("q", "quit", "Quit"),
         ("d", "toggle_dark", "Dark mode"),
-        ("x", "set_puzzle", "Set puzzle"),
         ("s", "start_round", "Start a new round"),
     ]
+    if os.getenv("DEBUG") is not None:
+        BINDINGS += [
+            ("x", "set_puzzle", "Test puzzle"),
+            ("c", "show_end", "Test round end"),
+        ]
 
     def __init__(self, host: str, port: int, username: str = "anonymous"):
         super().__init__()
@@ -249,9 +289,14 @@ class TuiClashApp(App):
         yield Footer()
 
     def action_set_puzzle(self) -> None:
-        with open("example.json", encoding="utf-8") as file:
+        with open("test_puzzle.json", encoding="utf-8") as file:
             new_puzzle = file.read()
         self.post_message_no_wait(self.PuzzleChanged(self, new_puzzle))
+
+    def action_show_end(self) -> None:
+        with open("test_submissions.json", encoding="utf-8") as file:
+            subm = file.read()
+        self.post_message_no_wait(self.RoundEnd(self, subm))
 
     @logged
     def on_button_pressed(self, _message: Message) -> None:
