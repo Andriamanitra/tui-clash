@@ -3,6 +3,11 @@ import struct
 
 
 class SockClient:
+    class Error(Exception):
+        def __init__(self, msg, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.msg = msg
+
     """
     Client for communicating over sockets
     Uses the following packet format:
@@ -24,7 +29,10 @@ class SockClient:
 
     def recv(self) -> str:
         header, _ancdata, _flags, _addr = self.sock.recvmsg(4)
+        if len(header) == 0:
+            raise SockClient.Error(f"received empty")
         remaining_size, = struct.unpack("<I", header)
+
         msg = b""
         while remaining_size > 0:
             recvd, _ancdata, _flags, _addr = self.sock.recvmsg(remaining_size)

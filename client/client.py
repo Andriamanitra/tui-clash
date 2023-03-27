@@ -212,15 +212,23 @@ class TuiClashApp(App):
     @logged
     def handle_connection(self) -> None:
         # TODO: PROPER exception handling
-        self.client.connect()
         addr, port = self.client.addr
-        self.sub_title = f"Connected to {addr}:{port}"
+        self.sub_title = f"Connecting to {addr}:{port}..."
+        try:
+            self.client.connect()
+        except Exception as exc:
+            errtype = type(exc).__name__
+            self.sub_title = f"Failed to connect to {addr}:{port} ({errtype})"
+            raise
+        else:
+            self.sub_title = f"Connected to {addr}:{port}"
+
         while True:
             # TODO: PROPER exception handling
             try:
                 msg = self.client.recv()
-            except Exception:
-                self.sub_title = "Disconnected"
+            except SockClient.Error as exc:
+                self.sub_title = f"Disconnected (SockClient {exc.msg})"
                 raise
             logging.debug(msg)
             if msg.startswith("PUZZLE:{"):
@@ -266,7 +274,6 @@ class TuiClashApp(App):
             with open(self.codefile.value, encoding="utf-8") as file:
                 code = file.read()
             # TODO: create a Submission class with fancy things
-            # TODO: get author name from somewhere (CLI parameter?)
             obj = {
                 "author": self.username,
                 "code": code,
