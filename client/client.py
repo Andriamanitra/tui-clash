@@ -92,7 +92,7 @@ class RoundEndScreen(Screen):
         code = self.submissions[0].code if self.submissions else "no submissions"
         yield Horizontal(
             ListView(*self.submissions, id="submission-list"),
-            Static(code, id="code", expand=True),
+            Static(code, id="code", expand=True, markup=False),
         )
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
