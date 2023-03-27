@@ -128,8 +128,8 @@ module TuiClashServer
   end
 
   Log.setup(:debug)
-  server = TCPServer.new("0.0.0.0", 1234)
-  Log.info { "listening on 0.0.0.0:1234" }
+  server = TCPServer.new("0.0.0.0", 1335)
+  Log.info { "listening on 0.0.0.0:1335" }
   while client = server.accept?
     spawn Player.new(client).listen
   end
