@@ -316,7 +316,7 @@ class TuiClashApp(App):
         self.push_screen(TestResultsScreen(results))
         logging.info("%d/%d tests correct", num_correct, len(results))
         if num_correct == len(results):
-            if "$FILE" in self.codefile.value:
+            if "$FILE" in cmd:
                 with open(self.codefile.value, encoding="utf-8") as file:
                     code = file.read()
             else:
