@@ -70,10 +70,12 @@ class TestResultsScreen(Screen):
             yield Static(result.show())
 
 
-class ClashStatic(Static):
+class Plain(Static):
     def __init__(self, txt: str, **kwargs):
         super().__init__(txt, **kwargs, markup=False)
 
+
+class ClashStatic(Plain):
     def set_content(self, txt: str) -> None:
         txt = txt.replace("{{", "").replace("}}", "")
         txt = txt.replace("<<", "").replace(">>", "")
@@ -118,9 +120,9 @@ class RoundEndScreen(Screen):
                 id="submission-list"
             ),
             Vertical(
-                Static(f"Command: {first_subm.cmd}", id="cmd", markup=False),
-                Static(f"Length: chars={charlen}, bytes={bytelen}", id="len", markup=False),
-                Static(first_subm.code, id="code", expand=True, markup=False),
+                Plain(f"Command: {first_subm.cmd}", id="cmd"),
+                Plain(f"Length: chars={charlen}, bytes={bytelen}", id="len"),
+                Plain(first_subm.code, id="code", expand=True),
                 id="submission-details",
             )
         )
@@ -129,9 +131,9 @@ class RoundEndScreen(Screen):
         # TODO: figure out how to not duplicate logic from self.compose()
         charlen = len(subm.code)
         bytelen = len(subm.code.encode("utf-8"))
-        self.query_one("#cmd", Static).update(f"Command: {subm.cmd}")
-        self.query_one("#len", Static).update(f"Length: chars={charlen}, bytes={bytelen}")
-        self.query_one("#code", Static).update(subm.code)
+        self.query_one("#cmd", Plain).update(f"Command: {subm.cmd}")
+        self.query_one("#len", Plain).update(f"Length: chars={charlen}, bytes={bytelen}")
+        self.query_one("#code", Plain).update(subm.code)
 
     def on_list_view_selected(self, event: ListView.Selected) -> None:
         if isinstance(event.item, Submission):
@@ -176,8 +178,8 @@ class TestCase(ListItem):
 
     def compose(self) -> ComposeResult:
         yield Horizontal(
-            Static(self.test_in, classes="test-text"),
-            Static(self.test_out, classes="test-text"),
+            Plain(self.test_in, classes="test-text"),
+            Plain(self.test_out, classes="test-text"),
         )
 
 
