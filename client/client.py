@@ -316,8 +316,11 @@ class TuiClashApp(App):
         self.push_screen(TestResultsScreen(results))
         logging.info("%d/%d tests correct", num_correct, len(results))
         if num_correct == len(results):
-            with open(self.codefile.value, encoding="utf-8") as file:
-                code = file.read()
+            if "$FILE" in self.codefile.value:
+                with open(self.codefile.value, encoding="utf-8") as file:
+                    code = file.read()
+            else:
+                code = ""
             # TODO: create a Submission class with fancy things
             obj = {
                 "author": self.username,
