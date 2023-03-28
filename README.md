@@ -4,6 +4,16 @@ Play Clash of Code style problems directly in terminal.
 
 The system is not designed to be safe against cheating in any way whatsoever so only play with trustworthy people, mmmkay?
 
+## Instructions to join a game
+
+1. Make sure you have an up-to-date Python (3.10+) version. You can also run it in docker (`docker run --rm -it python:3.11 bash`)
+1. (optional) Activate virtual environment (for example using `python3.10 -m virtualenv venv`)
+1. `pip install git+https://github.com/andriamanitra/tui-clash`
+1. Connect to a server with `tui-clash --host 127.0.0.1 --username YOUR_USERNAME` (replace the ip address and username with yours)
+1. Write some code in any language you wish. At the bottom of the window you can configure the command that is used to run your code from a file. By default it will run a Python file called `sol.py` in the same directory you ran the script from.
+1. When you are confident your code works press "Run tests". The submission will be made automatically if you pass all the tests locally.
+
+
 ## How does it work?
 
 The server is written in [Crystal-lang](https://crystal-lang.org/) – if you wish to host a game you will need to install that and compile `server.cr`.
@@ -28,6 +38,7 @@ Have fun!
 * There is currently no command-line interface for the server
 * The command-line interface for the client is lacking some nice things
 * The user interface does not immediately refresh when a round ends unless you interact with it (moving the mouse should be enough)
+
 
 
 
