@@ -1,0 +1,118 @@
+{
+  "title": "Complex Sum Squared",
+  "type": "CLASHOFCODE",
+  "nickname": "Andriamanitra",
+  "lastVersion": {
+    "data": {
+      "title": "Complex Sum Squared",
+      "fastest": true,
+      "reverse": false,
+      "shortest": true,
+      "statement": "Find the sum of [[N]] complex numbers and print the square of that number. The symbol {{i}} represents the imaginary unit which is equal to <<the square root of -1>>.\n\nThe sum of two complex numbers can be calculated using equation:\n`a+b{{i}} + c+d{{i}} = (a+c) + (b+d){{i}}`\nThe square of a complex number a+b{{i}} can be calculated using binomial theorem:\n`(a + b{{i}})^2 = a^2 + (2*a*b){{i}} + (b{{i}})^2 = (a^2 - b^2) + (2*a*b){{i}}`\nFor example the sum of the complex numbers 0+1{{i}}, -2-3{{i}} and 4+5{{i}} is\n`(0-2+4) + (1-3+5){{i}} = 2+3{{i}}`\n and the square of that number is\n`(2+3{{i}})^2 = (2*2) + (2*2*3){{i}} + (3{{i}}*3{{i}}) = -5+12{{i}}`",
+      "testCases": [
+        {
+          "title": "Example",
+          "isTest": true,
+          "testIn": "3\n0+1i\n-2-3i\n4+5i",
+          "testOut": "-5+12i",
+          "isValidator": false
+        },
+        {
+          "title": "Example validator",
+          "isTest": false,
+          "testIn": "3\n0-1i\n-2+4i\n5-2i",
+          "testOut": "8+6i",
+          "isValidator": true
+        },
+        {
+          "title": "One number",
+          "isTest": true,
+          "testIn": "1\n4+2i",
+          "testOut": "12+16i",
+          "isValidator": false
+        },
+        {
+          "title": "One number validator",
+          "isTest": false,
+          "testIn": "1\n5+2i",
+          "testOut": "21+20i",
+          "isValidator": true
+        },
+        {
+          "title": "Zero sum",
+          "isTest": true,
+          "testIn": "6\n7+1i\n3+2i\n3+6i\n-4-3i\n-2-5i\n-7-1i",
+          "testOut": "0+0i",
+          "isValidator": false
+        },
+        {
+          "title": "Zero sum validator",
+          "isTest": false,
+          "testIn": "6\n1+1i\n-1-1i\n2+2i\n-2-2i\n3+3i\n-3-3i",
+          "testOut": "0+0i",
+          "isValidator": true
+        },
+        {
+          "title": "Lots of numbers",
+          "isTest": true,
+          "testIn": "100\n15+52i\n-43-12i\n-81-94i\n68-97i\n124+48i\n-46-85i\n-51-32i\n25+70i\n-112+94i\n-90-102i\n-12-38i\n-36-81i\n49+82i\n-62+25i\n-26+78i\n-111+20i\n-35+60i\n-15+99i\n-27-45i\n-31-36i\n-108+109i\n18-9i\n54+65i\n-7-84i\n31+6i\n6+20i\n65+100i\n85-50i\n15+67i\n-112+9i\n-62-94i\n-98+41i\n103-87i\n101-87i\n44+78i\n37-43i\n6+53i\n-73+76i\n-82+107i\n-80-60i\n117-81i\n32+98i\n-97-111i\n22-83i\n62+1i\n-109+120i\n93-9i\n-81-58i\n22-41i\n-125-2i\n-104-46i\n-97+113i\n-75+82i\n-77-78i\n54-106i\n28+111i\n-28+101i\n-100-35i\n92-124i\n5+106i\n-87-112i\n-22-33i\n74+114i\n-39+19i\n15-34i\n-80-117i\n107+2i\n-80-31i\n124+120i\n119-67i\n-42+24i\n83+52i\n0-82i\n-1+50i\n118+110i\n25+45i\n-111-106i\n16+41i\n-122-107i\n-71+30i\n21-84i\n61-22i\n64-94i\n99-61i\n-3+59i\n-57-88i\n-54+54i\n114+25i\n21-106i\n-17-119i\n49-35i\n121-87i\n-108-92i\n9+37i\n-114+103i\n11-101i\n-24+41i\n29+45i\n-75+50i\n-74+33i",
+          "testOut": "556392+563206i",
+          "isValidator": false
+        },
+        {
+          "title": "Lots of numbers validator",
+          "isTest": false,
+          "testIn": "100\n-77+36i\n117+32i\n-99-1i\n-101+38i\n84+22i\n-122+69i\n79-9i\n114+68i\n-105+20i\n-1-82i\n-15-72i\n-28+23i\n-9+41i\n120-43i\n-10+127i\n-81+102i\n-10+16i\n53-90i\n110+30i\n-46+93i\n-120-86i\n23-31i\n104-33i\n61-79i\n-98+97i\n0-125i\n-120-77i\n96+64i\n-31-107i\n-126+116i\n88-108i\n124-82i\n5+112i\n82-55i\n32-98i\n-99+8i\n120+84i\n-85+17i\n-85-14i\n84+75i\n72+62i\n31-87i\n-12-43i\n54-47i\n80+71i\n-67-3i\n-5+103i\n79-71i\n85+9i\n-83+91i\n-118-49i\n-10-21i\n-90+27i\n87+40i\n127-102i\n-2+48i\n1-96i\n-124-37i\n-4+69i\n53-0i\n106+33i\n-112+88i\n27+33i\n14-127i\n79-128i\n-52+49i\n-126-110i\n45-65i\n-2+91i\n3-44i\n-73+11i\n-86+4i\n-70-72i\n37-81i\n-108+20i\n-43+18i\n-80-70i\n-67-60i\n38-33i\n-123-34i\n69+85i\n-73-122i\n90-121i\n93+2i\n69-118i\n-74+119i\n-40+58i\n109-2i\n73+38i\n-58-70i\n-99-2i\n-91+98i\n82+25i\n91-34i\n39-94i\n69+32i\n114+112i\n-72+8i\n112-11i\n10-33i",
+          "testOut": "-187621-90780i",
+          "isValidator": true
+        },
+        {
+          "title": "Bigger numbers",
+          "isTest": true,
+          "testIn": "20\n18085-27174i\n15469-23922i\n-2216+13061i\n-21303-11888i\n-6012+12050i\n-11621-15707i\n26984-6229i\n18352-14535i\n7188+11739i\n5510-30247i\n8801-3924i\n-28453+18155i\n12399+23706i\n-15519+19652i\n19379+9462i\n10806-10471i\n-28297+1071i\n-11671+25593i\n-24559+30298i\n6014-19849i",
+          "testOut": "-266385-1116848i",
+          "isValidator": false
+        },
+        {
+          "title": "Bigger numbers validator",
+          "isTest": false,
+          "testIn": "20\n-7279+7751i\n-16175+25657i\n24423-21415i\n27343+10684i\n-12080+5605i\n-19860-29699i\n20455-11009i\n-30866-21876i\n30908+27281i\n-10739-23951i\n32381+9904i\n-24351-14602i\n-7959+18813i\n-29202+4217i\n7663+22262i\n-16837-12333i\n-7078+16978i\n26407-14303i\n-870+31718i\n12828-31337i",
+          "testOut": "669519-612720i",
+          "isValidator": true
+        },
+        {
+          "title": "Imagining things",
+          "isTest": true,
+          "testIn": "7\n0+7i\n0-23i\n0+131i\n0+77i\n0+34i\n0+6i\n0-231i",
+          "testOut": "-1+0i",
+          "isValidator": false
+        },
+        {
+          "title": "Imagining things validator",
+          "isTest": false,
+          "testIn": "7\n0+8i\n0-24i\n0+132i\n0+78i\n0+35i\n0+7i\n0-235i",
+          "testOut": "-1+0i",
+          "isValidator": true
+        },
+        {
+          "title": "Real thing",
+          "isTest": true,
+          "testIn": "8\n7+8i\n3+3i\n-6-4i\n1+2i\n-5+4i\n2-3i\n6-3i\n4-7i",
+          "testOut": "144+0i",
+          "isValidator": false
+        },
+        {
+          "title": "Real thing validator",
+          "isTest": false,
+          "testIn": "8\n8+7i\n3+4i\n-6-4i\n1+2i\n-5+4i\n2-3i\n6-3i\n4-7i",
+          "testOut": "169+0i",
+          "isValidator": true
+        }
+      ],
+      "constraints": "1 ≤ [[N]] ≤ 100\n- 2^32 < [[real part]], [[imaginary part]] < 2^32",
+      "stubGenerator": "read N:int\nloop N read complexnum:string(64)\nwrite answer",
+      "inputDescription": "<<Line 1:>> An integer [[N]] for the number of complex numbers.\n<<Next [[N]] lines:>> [[N]] strings representing complex numbers, for example \"-3+1i\". If either the real or the imaginary part is 0 they will still be printed (for example 0 would be printed as \"0+0i\").",
+      "outputDescription": "A string representing a complex number, for example \"4-3i\". If either real or imaginary part is 0 it should still be printed (for example 0 would be printed as \"0+0i\")."
+    }
+  }
+}
